@@ -100,8 +100,11 @@ class CallApp {
         evokeByLocation(this.generateUniversalLink(config));
       }
       // Android
-      // 在微信中且配置了应用宝链接
-    } else if (Browser.isWechat && typeof this.options.yingyongbao !== 'undefined') {
+      // 在微信、QQ、QQ 浏览器中且配置了应用宝链接
+    } else if (
+      (Browser.isWechat || Browser.isQQ || Browser.isQQBrowser) &&
+      typeof this.options.yingyongbao !== 'undefined'
+    ) {
       evokeByLocation(this.generateYingYongBao(config));
     } else if (Browser.isOriginalChrome) {
       if (typeof intent !== 'undefined') {
@@ -111,7 +114,12 @@ class CallApp {
         evokeByLocation(schemeURL);
         checkOpenFall = this.fallToFbUrl;
       }
-    } else if (Browser.isWechat || Browser.isBaidu || (Browser.isWeibo && !isSupportWeibo) || Browser.isQzone) {
+    } else if (
+      Browser.isWechat ||
+      Browser.isBaidu ||
+      (Browser.isWeibo && !isSupportWeibo) ||
+      Browser.isQzone
+    ) {
       evokeByLocation(this.options.fallback);
     } else {
       evokeByIFrame(schemeURL);
